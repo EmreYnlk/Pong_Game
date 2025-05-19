@@ -40,6 +40,7 @@ ChooseModeScreen Sınıfı:
 1.	Normal Mode → client.py
 2.	Galatasaray Mode → clientgs.py
 3.	Fenerbahçe Mode → clientfb.py
+
 •	Her mod seçildiğinde ilgili müzik çalınır.
 HistoryScreen Sınıfı:
 •	Skorları JSON dosyasından okuyarak kullanıcıya gösterir.
