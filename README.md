@@ -28,6 +28,7 @@ Amaçları:
 •	Sunucu/istemci yapısını başlatmak (subprocess ile)
 •	Arka plan müziği kontrol etmek
 •	Skorları JSON dosyasından okumak
+
 MainMenu Sınıfı:
 •	Ana menüyü temsil eder.
 •	Arka plan müziği açılır (oyununarayüzsesi.mp3)
@@ -36,6 +37,7 @@ MainMenu Sınıfı:
 •	Join Online Game → Oyun modu seçme ekranına geçilir
 •	Play Offline → Hem offline oyun hem de online istemci başlatılır
 •	History → Skorlar JSON dosyasından okunarak görüntülenir
+
 ChooseModeScreen Sınıfı:
 •	Oyun modlarını seçmek için kullanılır.
 •	Üç farklı mod sunar:
@@ -44,12 +46,15 @@ ChooseModeScreen Sınıfı:
 3.	Fenerbahçe Mode → clientfb.py
 
 •	Her mod seçildiğinde ilgili müzik çalınır.
+
 HistoryScreen Sınıfı:
 •	Skorları JSON dosyasından okuyarak kullanıcıya gösterir.
 •	keep_score.json dosyasından "player1" ve "player2" galibiyet sayıları alınır.
+
 PongApp Sınıfı:
 •	Ekran yöneticisi (ScreenManager) ile uygulama başlatılır.
 •	menu, history, modescreen ekranları tanımlanır ve yüklenir.
+
 İnterface.kv:
 Kivy dilinde yazılmıştır.
 Arka plan resmi (projearkaplanresmi.jpg) kullanılmıştır.
@@ -58,15 +63,18 @@ Arka plan resmi (projearkaplanresmi.jpg) kullanılmıştır.
 •	<HistoryScreen>
 •	<ChooseModeScreen>
 Butonlar, konum ve işlev olarak tasarlanmıştır.
+
 <MainMenu>:
 •	Ana menü ekranında FloatLayout kullanılır.
 •	Kullanıcı Join Online Game Butonu ile Online olarak bir oyuna bağlanır.
 •	Kullanıcı internet bağlantısı olmadan yerel oyun başlatmak isterse bu butona tıklar.
 •	 Start Server Butonu sunucuyu başlatmak için kullanılır server.py dosyasını arka planda çalıştırır.
 •	History butonu kullanıcının geçmiş maçlardaki galibiyet sayılarını görüntülemesini sağlar.
+
 <HistoryScreen>:
 •	player1 ve player2 etiketleri, Python tarafından dinamik olarak güncellenir.
 •	Go Back butonu ile ana menüye dönülür.
+
 <ChooseModeScreen>:
 •	Kullanıcı, klasik Pong oynanışı tercih ettiğinde Normal Mode butonuna tıklar.
 •	Kullanıcı Galatasaray Temalı oynamak istediğinde  Galatasaray Mode butonuna tıklar.
@@ -79,22 +87,28 @@ Amaçları:
 •	Oyuncuların giriş bilgilerini yönetmek
 •	Oyun nesnelerinin (top, raketler) durumunu güncellemek
 •	İstemciler arasında veri alışverişi sağlamak
+
 pongDTO Sınıfı:
 •	Ağ üzerinden (örneğin pickle ile) istemcilerle haberleşirken, oyunla ilgili bütün veriler tek bir nesne olarak gönderilir veya alınır.
 •	Pong oyununda iki oyuncunun pozisyonlarını, topun konumunu, hareket bilgilerini ve skoru barındıran veri taşıyıcısıdır.
+
 Game Sınıfı:  
 •	Her biri iki oyuncudan oluşan tek bir oyunun durumunu yönetir.
 •	Pong oyununun sunucudaki temsilidir.
 •	Oyuncuları tanımlar, oyunun başlangıç değerlerini ayarlar ve PongDTO aracılığıyla oyunun durumunu takip eder.
 •	Sunucu, birden fazla Game nesnesi oluşturarak aynı anda birçok oyunu kontrol edebilir.
+
 get_game_dto(game_id) Fonksiyonu:  
 •	Her oyun için oyuncu konumları, top pozisyonu, hız, yön, skor gibi bilgileri içeren PongDTO nesnesine erişim sağlar
 •	İstemciler arası veri güncellenebilir ve paylaşılabilir.
+
 get_game(game_id) Fonksiyonu:
 •	game_ids listesindeki tüm Game nesnelerini dolaşır.
 •	game.game_id değeri, parametre olarak verilen game_id ile eşleşirse o Game nesnesini döndürür.
+
 update_game_dto(dto) Fonksiyonu: 
 Oyuncunun y (dikey) konumunu güncellemek için kullanılır.
+
 update_game_state(dto) Fonksiyonu:
 •	Oyun sırasında her oyuncunun pozisyonu, puanı, topun konumu gibi dinamik verileri güncelleyerek oyunun devamlılığını sağlar.
 •	Oyunculardan alınan verileri (DTO) işler.
@@ -102,11 +116,13 @@ update_game_state(dto) Fonksiyonu:
 •	Oyun bitiş durumu veya skor kontrolü yapabilir.
 •	Oyun içi objelerin (raket, top, skor) konumlarını günceller.
 •	Güncellenmiş durumu istemcilere geri gönderir.
+
 get_game_player_id() Fonksiyonu:
 •	Oyunu başlatmak için yeni bir bağlantı kabul edildiğinde çağrılır ve oyun kimliği ve oyuncu kimliğine ihtiyaç duyar.
 •	Yeni oyuncu için kullanılabilir oyun kimliğini ve oyuncu kimliğini sağlar.
 •	Bir oyuncunun başka bir oyuncuyu beklediği bir oyun varsa, o oyun kimliği ve oyuncu kimliği verilir.
 •	Bir kullanılabilir yuvası olan mevcut bir oyun yoksa, yeni bir oyun oluşturur ve kimlikleri döndürür.
+
 threaded_client(conn, game_id, player_id) Fonksiyonu:
 •	Her istemci bağlantısı için ayrı bir thread içerisinde çalışarak iletişimi yönetir.
 •	Oyun kuyruğundan oyun için veri aktarım nesnesini alır.
@@ -123,27 +139,32 @@ Amaçları:
 •	Kullanıcı ile etkileşim sağlayarak gerçek zamanlı bir oyun deneyimi sunmak
 •	Sunucudan gelen verilere göre topun ve raketlerin konumunu güncellemek
 •	Oyuncunun yukarı/aşağı hareketlerini klavye aracılığıyla kontrol etmek
+
 pongDTO Sınıfı:
 •	Ağ üzerinden (örneğin pickle ile) istemcilerle haberleşirken, oyunla ilgili bütün veriler tek bir nesne olarak gönderilir veya alınır.
 •	Pong oyununda iki oyuncunun pozisyonlarını, topun konumunu, hareket bilgilerini ve skoru barındıran veri taşıyıcısıdır.
+
 Bat sınıfı:
 •	Her bir oyuncunun raketini temsil eder.
 •	Oyuncunun yatay konumu sabit, dikey konumu ise move fonksiyonu ile klavye girişlerine göre değişir.
 •	draw fonksiyonu ile raketin ekran üzerine çizilmesini sağlar
 •	add_point fonksiyonu ile oyuncunun puanı bir artırılır.
 •	Her oyuncunun skoru ayrı ayrı tutulur ve oyunun gidişatına göre güncellenir
+
 Ball Sınıfı:
 •	Oyunda kullanılan topu temsil eder.
 •	Başlangıçta rastgele bir yatay ve dikey yön belirlenir (direction_x, direction_y).
 •	Topun konumu (x, y) ve hızı (velocity_x, velocity_y) tanımlanır.
 •	draw fonksiyonu ile top, ekranda daire şeklinde çizilir.
 •	Topun hareketi ve çarpışma kontrolü sunucu tarafında yapılırken, istemci tarafı sadece gelen verilere göre topun pozisyonunu güncelleyip ekrana yansıtır.
+
 update_bat_ball Fonksiyonu:
 •	Sunucudan alınan PongDTO nesnesi ile raketlerin (bat) ve topun (ball) konumunu günceller.
 •	Oyuncu kimliğine göre kendi raketinin ve rakibin raketinin renklerini ayarlar.
 •	Her iki oyuncunun x ve y koordinatları güncellenir.
 •	Topun konumu ve rengi, gelen DTO verilerine göre ayarlanır.
 •	Bu sayede oyun ekranında doğru pozisyonlar gösterilerek istemcide gerçek zamanlı görsellik sağlanır.
+
 Ana Oyun Döngüsü ve İstemci Bağlantısı:
  İstemci (client), TCP protokolü kullanarak belirtilen IP ve port ile sunucuya bağlanır.
 •	Sunucudan gelen ilk PongDTO verisi alınır ve oyuncunun kimliği belirlenir.
